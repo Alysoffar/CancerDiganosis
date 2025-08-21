@@ -4,5 +4,5 @@ medical_app/db
 
 breast_cancer_model.pkl
 
-scalar.pkl
+scaler.pkl
 
