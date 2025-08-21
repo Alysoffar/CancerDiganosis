@@ -1,0 +1,8 @@
+medical_app/db
+
+.streamlit/
+
+breast_cancer_model.pkl
+
+scalar.pkl
+
