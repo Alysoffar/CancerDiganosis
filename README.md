@@ -21,30 +21,59 @@ An interactive Streamlit-based medical diagnosis support tool with doctor authen
 - Matplotlib (charts)
 - SMTP (email notifications)
 
-## Folder Structure (key items)
-```
+## Folder Structure
+
+```text
 MedicalDiagnosis/
-  advanced_medical_ui_fixed.py   # Main Streamlit app
-  breast_cancer_model.pkl        # Trained classifier (expected)
-  scaler.pkl                     # Corresponding scaler
+  advanced_medical_ui_fixed.py    # Main Streamlit application (UI, auth, DB, ML, analytics)
+  Medical.ipynb                   # Notebook (exploration / experimentation)
+  Dataset/                        # (Optional) Source data used for training/evaluation
+    ...                           # Your dataset files (not required at runtime if model is present)
+  breast_cancer_model.pkl         # Trained scikit-learn classifier (runtime dependency)
+  scaler.pkl                      # Feature scaler paired with the model
+  medical_app.db                  # SQLite database (auto-created at first run)
   .streamlit/
-    secrets.toml                 # Secrets (not committed)
-  medical_app.db                 # SQLite database (auto-created)
-  README.md                      # This file
+    secrets.toml                  # Private secrets (SMTP, keys) – DO NOT COMMIT
+  .gitignore                      # Ignore rules (db, models, secrets, etc.)
+  README.md                       # Project documentation
 ```
 
+Notes:
+
+- `medical_app.db` and `secrets.toml` are environment / runtime artifacts and should remain untracked.
+- If the model or scaler is large or proprietary, keep them out of version control and document retrieval steps instead.
+- The `Dataset/` folder is optional for running the app; it is only needed if you plan to retrain or experiment.
+
 ## Prerequisites
+
 - Python 3.9+ recommended
 - Model files: `breast_cancer_model.pkl` and `scaler.pkl` present in the folder
 
 ## Installation
+
 ```bash
 pip install streamlit scikit-learn joblib numpy pandas matplotlib
 ```
+
 (Optional: create a virtual environment first.)
 
+host = "smtp.gmail.com"
+port = 587
+user = "your_email@example.com"
+password = "your_app_password"  # Use an App Password (e.g., Gmail 2FA)
+use_tls = true
+use_ssl = false
+from = "no-reply@example.com"
+to = "admin@example.com"
+
+admin_email = "admin@example.com"
+app_base_url = "http://localhost:8501"   # Adjust if deploying
+APP_SECRET_KEY = "replace-with-a-long-random-string"
+ 
 ## Secrets Configuration
+
 Create `MedicalDiagnosis/.streamlit/secrets.toml`:
+
 ```toml
 [smtp]
 host = "smtp.gmail.com"
@@ -62,12 +91,15 @@ APP_SECRET_KEY = "replace-with-a-long-random-string"
 ```
 
 ## Running the App
+
 From the `MedicalDiagnosis` directory:
+
 ```bash
 streamlit run advanced_medical_ui_fixed.py
 ```
 
 ## Workflow Summary
+
 1. Doctor applies via signup form → pending application stored → admin email sent with Approve / Reject links.
 2. Admin clicks link → token verified → doctor auto-added to DB → applicant notified.
 3. Doctor logs in → their patients (from SQLite) are loaded.
@@ -75,24 +107,30 @@ streamlit run advanced_medical_ui_fixed.py
 5. Statistics page aggregates data (per doctor scope) + allows per-patient drill‑down and treatment progress updates.
 
 ## Environment Variables (Optional Overrides)
+
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`
 - `APP_SECRET_KEY` (if not in secrets)
 - `APP_BASE_URL` (deployment URL for action links)
 
 ## Data Persistence
+
 SQLite file: `medical_app.db`
+
 Tables:
+
 - `doctors`: approved accounts
 - `pending_applications`: awaiting approval
 - `patients`: per‑doctor patient records
 
 ## Security Notes
+
 - Replace `APP_SECRET_KEY` with a strong secret in production.
 - Use app passwords / provider-specific credentials for SMTP.
 - Consider upgrading password hashing to bcrypt/argon2 (currently SHA‑256).
 - Add HTTPS termination in front (reverse proxy) for deployment.
 
 ## Extensibility Ideas
+
 - Admin in-app dashboard for approvals
 - Role-based access (admin vs doctor)
 - Audit logging of actions
@@ -101,9 +139,10 @@ Tables:
 - Multi-factor authentication
 
 ## Troubleshooting
+
 | Issue | Cause | Action |
 |-------|-------|--------|
-| Email not sent | Missing/invalid SMTP secrets | Verify `secrets.toml` values | 
+| Email not sent | Missing/invalid SMTP secrets | Verify `secrets.toml` values |
 | Approval link invalid | Stale token or base URL mismatch | Confirm `app_base_url` matches deployed URL |
 | Empty statistics | No patients or missing `prediction`/`features` fields | Run new diagnosis to populate |
 | Login fails after approval | Doctor not inserted | Check logs & DB (`doctors` table) |
