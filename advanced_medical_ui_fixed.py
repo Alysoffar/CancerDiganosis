@@ -618,7 +618,7 @@ st.markdown("""
 
     /* More targeted approach instead of global override */
     /* Remove the global * selector and target specific elements instead */
-    .stApp, .main .block-container, p, span, div:not([data-testid="stSelectbox"] div) {
+    .stApp .main .block-container > div > div > div:not(.stSelectbox) {
         color: #000000 !important;
     }
 
@@ -697,33 +697,27 @@ st.markdown("""
         background-color: rgba(0, 0, 0, 0.8) !important;
     }
     
-    /* Force override for all selectbox descendants */
+    /* Clean selectbox styling - consistent high contrast */
+    .stSelectbox select,
+    .stSelectbox option,
+    .stSelectbox div[role="listbox"],
+    .stSelectbox div[role="option"],
+    .stSelectbox div[data-baseweb="select"] > div,
+    .stSelectbox div[data-baseweb="menu"] > div {
+        color: #ffffff !important;
+        background-color: rgba(40, 40, 40, 0.95) !important;
+    }
+    
+    /* Dropdown option hover states */
+    .stSelectbox div[role="option"]:hover,
+    .stSelectbox option:hover {
+        background-color: rgba(80, 80, 80, 0.95) !important;
+        color: #ffffff !important;
+    }
+    
+    /* Ensure all selectbox text is visible */
     .stSelectbox * {
         color: #ffffff !important;
-    }
-    
-    /* Target specific Streamlit select classes */
-    .css-1uccc91-singleValue,
-    .css-1wa3eu0-placeholder,
-    .css-26l3qy-menu,
-    .css-4ljt47-MenuList,
-    .css-11unzgr,
-    .css-1n7v3ny-option {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Nuclear option - override everything in selectbox with white */
-    .stSelectbox div,
-    .stSelectbox span,
-    .stSelectbox p,
-    .stSelectbox li {
-        color: #ffffff !important;
-    }
-
-    /* Override any remaining white text */
-    * {
-        color: #000000 !important;
     }
     
     /* Re-establish button colors after global override */
@@ -802,7 +796,7 @@ st.markdown("""
 
     /* More targeted approach instead of global override */
     /* Remove the global * selector and target specific elements instead */
-    .stApp, .main .block-container, p, span, div:not([data-testid="stSelectbox"] div) {
+    .stApp .main .block-container > div > div > div:not(.stSelectbox) {
         color: #000000 !important;
     }
 
@@ -861,19 +855,19 @@ st.markdown("""
         display: none !important;
     }
 
-    /* Portal-safe overrides to force white text in dropdown menu options */
+    /* Portal-safe dropdown menu styles */
     div[role="listbox"] {
-        background-color: #2a2a2a !important;
+        background-color: rgba(40, 40, 40, 0.95) !important;
         border: 2px solid #c0c0c0 !important;
         border-radius: 12px !important;
     }
     div[role="option"] {
         color: #ffffff !important;
-        background-color: #2a2a2a !important;
+        background-color: rgba(40, 40, 40, 0.95) !important;
         padding: 10px 16px !important;
     }
     div[role="option"]:hover {
-        background-color: #444444 !important;
+        background-color: rgba(80, 80, 80, 0.95) !important;
         color: #ffffff !important;
     }
     div[role="option"][aria-selected="true"],
@@ -1053,6 +1047,29 @@ def send_signup_email(doctor_info):
         msg["To"] = to_addr
         msg.attach(MIMEText(body, "html"))
 
+        # Store the application first to get the app_id
+        app_id = doctor_info.get('application_id') or f"APP_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        doctor_info['application_id'] = app_id
+        
+        # Persist pending application to DB
+        try:
+            db_store_pending(doctor_info)
+        except Exception as e:
+            st.error(f"Failed to store pending application: {e}")
+
+        # Add approval / rejection links to the email body
+        approve_link = _build_action_link(app_id, 'accept')
+        reject_link = _build_action_link(app_id, 'reject')
+        links_block = f"<p><strong>Quick Actions:</strong><br>✅ <a href='{approve_link}'>Approve</a> &nbsp; | &nbsp; ❌ <a href='{reject_link}'>Reject</a></p>"
+        body_with_links = body.replace('</body>', f'{links_block}</body>')
+
+        # Build the MIME email with action links
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = from_addr or (user or "no-reply@localhost")
+        msg["To"] = to_addr
+        msg.attach(MIMEText(body_with_links, "html"))
+
         sent = False
         if host and user and password:
             if use_ssl:
@@ -1071,41 +1088,6 @@ def send_signup_email(doctor_info):
                     sent = True
         else:
             st.warning("Email not sent: missing SMTP configuration (host/user/password). Add [smtp] in secrets or set SMTP_* environment variables.")
-
-        # Store the application (in a real app, this would go to a database)
-        app_id = doctor_info.get('application_id') or f"APP_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        doctor_info['application_id'] = app_id
-        # Persist pending application to DB
-        try:
-            db_store_pending(doctor_info)
-        except Exception as e:
-            st.error(f"Failed to store pending application: {e}")
-
-        # Append approval / rejection links if we can build them
-        approve_link = _build_action_link(app_id, 'accept')
-        reject_link = _build_action_link(app_id, 'reject')
-        links_block = f"<p><strong>Quick Actions:</strong><br>✅ <a href='{approve_link}'>Approve</a> &nbsp; | &nbsp; ❌ <a href='{reject_link}'>Reject</a></p>"
-        body_with_links = body.replace('</body>', f'{links_block}</body>')
-
-        # Replace body in existing message (rebuild msg for clarity)
-        # Reconstruct MIME with links
-        # (We reuse same msg variable logic above; easier to just rebuild and resend if not sent yet.)
-
-        # If already sent earlier above we would need to embed before send, but we only send once below.
-        # Adjust the earlier code so we only send now with links.
-        # For simplicity: re-build message and re-send using generic helper if not sent yet.
-
-        # Use generic sending path (ensures single send with links)
-        # We'll bypass the earlier 'sent' variable path by resetting it and sending again.
-        # NOTE: This slight restructure ensures links are included.
-
-        # We will ignore previously built msg & resend with links.
-
-        # Prepare final message with links using send_generic_email for consistency
-        if host and user and password:  # Variables from earlier scope
-            # Rebuild final message using helper
-            final_sent = send_generic_email(to_addr, subject, body_with_links)
-            sent = final_sent
 
         if sent:
             st.success("✅ Application submitted and email sent to admin.")
