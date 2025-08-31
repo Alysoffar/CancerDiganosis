@@ -22,7 +22,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for modern UI styling
+# Custom CSS for black and white UI with shadows
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
@@ -33,176 +33,259 @@ st.markdown("""
     
     .main > div {
         padding-top: 2rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 25%, #d0d0d0 50%, #c0c0c0 75%, #b0b0b0 100%);
         min-height: 100vh;
     }
     
     .stApp {
-        background: linear-gradient(135deg, #f1f3f4 0%, #e8eaf6 25%, #e3f2fd 50%, #e0f2f1 75%, #f3e5f5 100%);
+        background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 25%, #d8d8d8 50%, #c8c8c8 75%, #b8b8b8 100%);
         min-height: 100vh;
     }
 
-    /* ===== Modern Form Container ===== */
-    .login-container,
+    /* 3D Card Effects */
     .card-3d {
-        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-        border-radius: 22px !important;
-        box-shadow: 0 4px 24px 0 rgba(100,125,222,0.09), 0 1px 2px rgba(127,83,172,0.05);
-        padding: 2.5rem !important;
-        margin: 1.2rem 0 !important;
-        border: none !important;
+        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 
+            20px 20px 60px #bebebe,
+            -20px -20px 60px #ffffff;
+        transform: translateZ(0);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #000000 !important;
+    }
+    
+    .card-3d * {
+        color: #000000 !important;
+    }
+    
+    .card-3d:hover {
+        transform: translateY(-10px) rotateX(5deg);
+        box-shadow: 
+            25px 25px 80px #bebebe,
+            -25px -25px 80px #ffffff;
     }
 
-    /* ===== Modern Section Headers ===== */
-    h3, h4, h2, .stMarkdown h3, .stMarkdown h2 {
-        font-size: 1.37rem !important;
-        font-weight: 700 !important;
-        color: #5d3fd3 !important;
-        margin-top: 1.5rem !important;
-        margin-bottom: 1.1rem !important;
-        letter-spacing: 0.02em;
-        display: flex;
-        align-items: center;
-        gap: 0.6em;
+    /* Login form styling */
+    .login-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 
+            20px 20px 40px #bebebe,
+            -20px -20px 40px #ffffff;
+        transform: translateZ(0);
+        color: #000000 !important;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .login-container * {
+        color: #000000 !important;
     }
 
-    /* ===== Modern Input Fields ===== */
+    /* Input Fields - Dark background with white text */
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
     .stTextArea > div > div > textarea {
-        background: linear-gradient(90deg, #eaf0fb 0%, #e3eafc 100%);
-        color: #222 !important;
-        border: 1.5px solid #d5d7df !important;
-        border-radius: 14px !important;
-        box-shadow: 0 2px 8px 0 rgba(127,83,172,0.07);
-        font-size: 1.09rem !important;
-        padding: 14px 22px !important;
-        margin-bottom: 10px !important;
-        transition: box-shadow 0.18s, background 0.2s;
+        background: #2a2a2a !important;
+        color: #ffffff !important;
+        border: 2px solid #555555 !important;
+        border-radius: 12px !important;
+        box-shadow: inset 4px 4px 8px #1a1a1a, inset -4px -4px 8px #3a3a3a;
+        font-size: 16px !important;
+        padding: 14px 18px !important;
+        margin-bottom: 8px !important;
+        transition: all 0.3s ease;
     }
 
-    /* Remove heavy shadow and black background from inputs */
-    .stTextInput > div, .stNumberInput > div, .stTextArea > div {
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    /* Input focus: subtle glow */
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus {
-        box-shadow: 0 0 0 4px rgba(93,63,211,0.13) !important;
-        background: #f8faff !important;
-        color: #222 !important;
+        border-color: #777777 !important;
+        box-shadow: inset 6px 6px 12px #1a1a1a, inset -6px -6px 12px #3a3a3a;
+        color: #ffffff !important;
     }
 
-    /* ===== Password Field Icon Area ===== */
-    .stTextInput > div > div > div[data-testid="stInputPasswordVisibilityToggle"] {
-        background: linear-gradient(90deg, #d1d3e0 0%, #eaf0fb 100%) !important;
-        border-radius: 0 14px 14px 0 !important;
-        padding-right: 10px !important;
+    /* Placeholder text styling */
+    .stTextInput > div > div > input::placeholder,
+    .stNumberInput > div > div > input::placeholder,
+    .stTextArea > div > div > textarea::placeholder {
+        color: #cccccc !important;
+        opacity: 0.7;
     }
 
-    /* ===== Modern Button ===== */
-    .stButton > button,
-    .stDownloadButton > button {
-        background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%) !important;
-        color: #fff !important;
+    /* 3D Buttons */
+    .stButton > button {
+        background: linear-gradient(145deg, #e8e8e8, #d0d0d0) !important;
         border: none !important;
-        border-radius: 14px !important;
-        font-size: 1.15rem !important;
+        border-radius: 15px !important;
+        padding: 0.8rem 2rem !important;
+        color: #000000 !important;
         font-weight: 600 !important;
-        padding: 14px 0 !important;
-        box-shadow: 0 2px 10px 0 rgba(100,125,222,0.12);
-        transition: box-shadow 0.2s, background 0.3s;
-        width: 100% !important;
-        text-align: center !important;
+        box-shadow: 
+            8px 8px 16px #bebebe,
+            -8px -8px 16px #ffffff;
+        transition: all 0.3s ease !important;
+        transform: translateZ(0) !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 
+            12px 12px 24px #bebebe,
+            -12px -12px 24px #ffffff !important;
+        background: linear-gradient(145deg, #d0d0d0, #c0c0c0) !important;
+    }
+    
+    .stButton > button:active {
+        transform: translateY(1px) scale(0.98) !important;
+        box-shadow: 
+            4px 4px 8px #bebebe,
+            -4px -4px 8px #ffffff !important;
     }
 
-    .stButton > button:hover,
-    .stDownloadButton > button:hover {
-        background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%) !important;
-        box-shadow: 0 4px 16px 0 rgba(127,83,172,0.14);
+    /* Enhanced Metrics with 3D effect */
+    .stMetric {
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 
+            10px 10px 20px #c8ced3,
+            -10px -10px 20px #ffffff;
+        transform: translateZ(0);
+        transition: all 0.3s ease;
+        color: #000000 !important;
+    }
+    
+    .stMetric * {
+        color: #000000 !important;
+    }
+    
+    .stMetric:hover {
+        transform: translateY(-5px);
+        box-shadow: 
+            15px 15px 30px #c8ced3,
+            -15px -15px 30px #ffffff;
     }
 
-    /* Fix button disabled state for clarity */
-    .stButton > button:disabled {
-        background: linear-gradient(90deg, #e3e3e3 0%, #e0e0e0 100%) !important;
-        color: #aaa !important;
-        opacity: 0.6 !important;
+    /* Success boxes with 3D effects */
+    .success-box-3d {
+        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
+        padding: 2rem;
+        border-radius: 20px;
+        border-left: 8px solid #888888;
+        margin: 1rem 0;
+        box-shadow: 
+            15px 15px 30px #bebebe,
+            -15px -15px 30px #ffffff;
+        transform: translateZ(0);
+        transition: all 0.3s ease;
+        color: #000000 !important;
+    }
+    
+    .success-box-3d * {
+        color: #000000 !important;
+    }
+    
+    .success-box-3d:hover {
+        transform: translateY(-5px) rotateX(2deg);
+        box-shadow: 
+            20px 20px 40px #bebebe,
+            -20px -20px 40px #ffffff;
     }
 
-    /* ===== Modern Checkbox ===== */
-    .stCheckbox > label {
-        font-size: 1.08rem !important;
-        font-weight: 500 !important;
-        color: #222 !important;
-        padding-left: 8px !important;
+    /* 3D Sidebar */
+    .css-1d391kg {
+        background: linear-gradient(145deg, #d0d0d0, #e0e0e0);
+        border-radius: 15px;
+        box-shadow: 
+            10px 10px 20px #bebebe,
+            -10px -10px 20px #ffffff;
     }
-    .stCheckbox input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        accent-color: #6a82fb;
-        border-radius: 5px;
+    
+    /* Sidebar text color - WHITE TEXT */
+    .css-1d391kg, .css-1d391kg * {
+        color: #ffffff !important;
     }
-
-    /* ===== Modern "Apply for Access" Button ===== */
-    .stButton > button[data-testid="apply-access"] {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
-        color: #fff !important;
-        border-radius: 18px !important;
-        font-size: 1.07rem !important;
-        font-weight: 600 !important;
-        box-shadow: 0 2px 10px 0 rgba(100,125,222,0.10);
-        margin-top: 1.1rem !important;
-        margin-bottom: 0.8rem !important;
-        min-height: 48px !important;
+    
+    [data-testid="stSidebar"], [data-testid="stSidebar"] * {
+        color: #ffffff !important;
     }
 
-    /* ===== General Typography ===== */
-    .stApp, .main .block-container, p, span, div, h1, h2, h3, h4, h5, h6 {
-        font-family: 'Roboto', 'Inter', 'Segoe UI', Arial, sans-serif !important;
-        color: #222 !important;
+    /* Additional sidebar selectors for comprehensive coverage */
+    .stSidebar, .stSidebar * {
+        color: #ffffff !important;
     }
 
-    /* ===== Remove legacy dark input/button overrides ===== */
-    .stTextInput, .stNumberInput, .stTextArea, .stSelectbox, .stButton {
-        background: transparent !important;
-        color: #222 !important;
-        border: none !important;
-        box-shadow: none !important;
+    /* Sidebar markdown elements */
+    .css-1d391kg .stMarkdown, .css-1d391kg .stMarkdown * {
+        color: #ffffff !important;
     }
 
-    /* ===== Responsive ===== */
-    @media (max-width: 600px) {
-        .login-container,
-        .card-3d {
-            padding: 1.2rem !important;
-        }
-        h3, h4, h2 {
-            font-size: 1.1rem !important;
-        }
+    /* Sidebar headers */
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4,
+    [data-testid="stSidebar"] h5,
+    [data-testid="stSidebar"] h6 {
+        color: #ffffff !important;
     }
 
-    /* Main title */
-    .main-title {
-        color: #5d3fd3 !important;
-        text-align: center;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 2rem;
+    /* Sidebar labels and text */
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div {
+        color: #ffffff !important;
     }
 
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background: #f8f9fa !important;
+    /* Headers */
+    h1, h2, h3, h4, h5, h6 {
+        color: #000000 !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
 
-    [data-testid="stSidebar"] * {
-        color: #2c3e50 !important;
+    /* General text color */
+    .stApp, .stApp *, p, span, div {
+        color: #000000 !important;
     }
 
-    /* Selectbox styling */
+    /* Main content text */
+    .main * {
+        color: #000000 !important;
+    }
+
+    /* Patient card styling */
+    .patient-card {
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border-left: 5px solid #888888;
+        box-shadow: 
+            8px 8px 16px #d0d0d0,
+            -8px -8px 16px #ffffff;
+        transition: all 0.3s ease;
+        color: #000000 !important;
+    }
+    
+    .patient-card * {
+        color: #000000 !important;
+    }
+    
+    .patient-card:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 
+            12px 12px 24px #d0d0d0,
+            -12px -12px 24px #ffffff;
+    }
+
+    /* KEEP DROPDOWN STYLING AS IS - White text on gradient background */
     .stSelectbox > div > div {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
         color: #fff !important;
@@ -211,7 +294,6 @@ st.markdown("""
         box-shadow: 0 2px 8px 0 rgba(127,83,172,0.15);
     }
 
-    /* Dropdown options */
     .stSelectbox div[role="option"] {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
         color: #fff !important;
@@ -223,7 +305,6 @@ st.markdown("""
         color: #fff !important;
     }
 
-    /* Additional dropdown styling for better white text visibility */
     [data-baseweb="select"] > div {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
         color: #fff !important;
@@ -246,10 +327,151 @@ st.markdown("""
         color: #fff !important;
     }
 
-    /* Force white text for selected value and placeholder */
     .stSelectbox .css-1uccc91-singleValue, 
     .stSelectbox .css-1wa3eu0-placeholder {
         color: #fff !important;
+    }
+
+    /* Fix Streamlit Alert Components - Ensure white text on dark backgrounds */
+    .stAlert {
+        color: #fff !important;
+    }
+
+    .stAlert > div {
+        color: #fff !important;
+    }
+
+    .stAlert * {
+        color: #fff !important;
+    }
+
+    /* Error messages - red background with white text */
+    [data-testid="stAlert"] {
+        color: #fff !important;
+    }
+
+    [data-testid="stAlert"] * {
+        color: #fff !important;
+    }
+
+    /* Success messages - ensure white text */
+    .stSuccess {
+        color: #fff !important;
+    }
+
+    .stSuccess * {
+        color: #fff !important;
+    }
+
+    /* Warning messages - ensure white text */
+    .stWarning {
+        color: #fff !important;
+    }
+
+    .stWarning * {
+        color: #fff !important;
+    }
+
+    /* Error messages - ensure white text */
+    .stError {
+        color: #fff !important;
+    }
+
+    .stError * {
+        color: #fff !important;
+    }
+
+    /* Info messages - ensure white text */
+    .stInfo {
+        color: #fff !important;
+    }
+
+    .stInfo * {
+        color: #fff !important;
+    }
+
+    /* Target alert content specifically */
+    .stAlert [data-testid="alertContent"] {
+        color: #fff !important;
+    }
+
+    .stAlert [data-testid="alertContent"] * {
+        color: #fff !important;
+    }
+
+    /* Additional targeting for alert text */
+    div[role="alert"] {
+        color: #fff !important;
+    }
+
+    div[role="alert"] * {
+        color: #fff !important;
+    }
+
+    /* Streamlit markdown content in alerts */
+    .stAlert .stMarkdown {
+        color: #fff !important;
+    }
+
+    .stAlert .stMarkdown * {
+        color: #fff !important;
+    }
+
+    /* COMPREHENSIVE INPUT STYLING - Ensure ALL input boxes have white text */
+    /* Target all input fields across the entire application */
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    input[type="email"],
+    textarea {
+        background: #2a2a2a !important;
+        color: #ffffff !important;
+        border: 2px solid #555555 !important;
+        border-radius: 12px !important;
+    }
+
+    /* Additional Streamlit input selectors */
+    .stTextInput input,
+    .stNumberInput input,
+    .stTextArea textarea,
+    .stPasswordInput input {
+        background: #2a2a2a !important;
+        color: #ffffff !important;
+        border: 2px solid #555555 !important;
+        border-radius: 12px !important;
+    }
+
+    /* Patient data entry specific inputs */
+    [data-testid="stTextInput"] input,
+    [data-testid="stNumberInput"] input,
+    [data-testid="stTextArea"] textarea {
+        background: #2a2a2a !important;
+        color: #ffffff !important;
+        border: 2px solid #555555 !important;
+    }
+
+    /* Focus states for all inputs */
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+        color: #ffffff !important;
+        border-color: #777777 !important;
+    }
+
+    /* Ensure input labels are visible */
+    .stTextInput label,
+    .stNumberInput label,
+    .stTextArea label {
+        color: #000000 !important;
+    }
+
+    /* Input containers should not override text color */
+    .stTextInput > div,
+    .stNumberInput > div,
+    .stTextArea > div {
+        background: transparent !important;
     }
 </style>
 """, unsafe_allow_html=True)
