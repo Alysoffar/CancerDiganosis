@@ -22,7 +22,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for 3D effects and enhanced styling with new background
+# Custom CSS for modern UI styling
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
@@ -41,845 +41,215 @@ st.markdown("""
         background: linear-gradient(135deg, #f1f3f4 0%, #e8eaf6 25%, #e3f2fd 50%, #e0f2f1 75%, #f3e5f5 100%);
         min-height: 100vh;
     }
-    
-    /* 3D Card Effects */
+
+    /* ===== Modern Form Container ===== */
+    .login-container,
     .card-3d {
-        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
-        border-radius: 20px;
-        padding: 2rem;
-        margin: 1rem 0;
-        box-shadow: 
-            20px 20px 60px #bebebe,
-            -20px -20px 60px #ffffff;
-        transform: translateZ(0);
-        transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: #000000 !important;
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        border-radius: 22px !important;
+        box-shadow: 0 4px 24px 0 rgba(100,125,222,0.09), 0 1px 2px rgba(127,83,172,0.05);
+        padding: 2.5rem !important;
+        margin: 1.2rem 0 !important;
+        border: none !important;
     }
-    
-    .card-3d * {
-        color: #000000 !important;
+
+    /* ===== Modern Section Headers ===== */
+    h3, h4, h2, .stMarkdown h3, .stMarkdown h2 {
+        font-size: 1.37rem !important;
+        font-weight: 700 !important;
+        color: #5d3fd3 !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 1.1rem !important;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
     }
-    
-    .card-3d:hover {
-        transform: translateY(-10px) rotateX(5deg);
-        box-shadow: 
-            25px 25px 80px #bebebe,
-            -25px -25px 80px #ffffff;
+
+    /* ===== Modern Input Fields ===== */
+    .stTextInput > div > div > input,
+    .stNumberInput > div > div > input,
+    .stTextArea > div > div > textarea {
+        background: linear-gradient(90deg, #eaf0fb 0%, #e3eafc 100%);
+        color: #222 !important;
+        border: 1.5px solid #d5d7df !important;
+        border-radius: 14px !important;
+        box-shadow: 0 2px 8px 0 rgba(127,83,172,0.07);
+        font-size: 1.09rem !important;
+        padding: 14px 22px !important;
+        margin-bottom: 10px !important;
+        transition: box-shadow 0.18s, background 0.2s;
     }
-    
-    /* Success Box 3D (grey theme) */
-    .success-box-3d {
-        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        border-radius: 15px;
-        padding: 25px;
-        margin: 20px 0;
-        box-shadow: 
-            0 15px 35px #bebebe,
-            inset 0 1px rgba(255, 255, 255, 0.5);
-        transform: perspective(1000px) rotateX(2deg);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        color: #000000 !important;
+
+    /* Remove heavy shadow and black background from inputs */
+    .stTextInput > div, .stNumberInput > div, .stTextArea > div {
+        background: transparent !important;
+        box-shadow: none !important;
     }
-    
-    .success-box-3d:hover {
-        transform: perspective(1000px) rotateX(0deg) translateZ(5px);
-        box-shadow: 
-            0 20px 40px #bebebe,
-            inset 0 1px rgba(255, 255, 255, 0.6);
+
+    /* Input focus: subtle glow */
+    .stTextInput > div > div > input:focus,
+    .stNumberInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus {
+        box-shadow: 0 0 0 4px rgba(93,63,211,0.13) !important;
+        background: #f8faff !important;
+        color: #222 !important;
     }
-    
-    .success-box-3d h3, .success-box-3d p, .success-box-3d div {
-        color: #000000 !important;
+
+    /* ===== Password Field Icon Area ===== */
+    .stTextInput > div > div > div[data-testid="stInputPasswordVisibilityToggle"] {
+        background: linear-gradient(90deg, #d1d3e0 0%, #eaf0fb 100%) !important;
+        border-radius: 0 14px 14px 0 !important;
+        padding-right: 10px !important;
     }
-    
-    /* 3D Buttons */
-    .stButton > button {
-        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
-        border: none;
-        border-radius: 15px;
-        padding: 0.8rem 2rem;
-        color: #000000 !important;
-        font-weight: 600;
-        box-shadow: 
-            8px 8px 16px #bebebe,
-            -8px -8px 16px #ffffff;
-        transition: all 0.3s ease;
-        transform: translateZ(0);
+
+    /* ===== Modern Button ===== */
+    .stButton > button,
+    .stDownloadButton > button {
+        background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 14px !important;
+        font-size: 1.15rem !important;
+        font-weight: 600 !important;
+        padding: 14px 0 !important;
+        box-shadow: 0 2px 10px 0 rgba(100,125,222,0.12);
+        transition: box-shadow 0.2s, background 0.3s;
+        width: 100% !important;
+        text-align: center !important;
     }
-    
-    .stButton > button:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 
-            12px 12px 24px #bebebe,
-            -12px -12px 24px #ffffff;
-        background: linear-gradient(145deg, #d0d0d0, #c0c0c0);
+
+    .stButton > button:hover,
+    .stDownloadButton > button:hover {
+        background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%) !important;
+        box-shadow: 0 4px 16px 0 rgba(127,83,172,0.14);
     }
-    
-    .stButton > button:active {
-        transform: translateY(1px) scale(0.98);
-        box-shadow: 
-            4px 4px 8px #bebebe,
-            -4px -4px 8px #ffffff;
+
+    /* Fix button disabled state for clarity */
+    .stButton > button:disabled {
+        background: linear-gradient(90deg, #e3e3e3 0%, #e0e0e0 100%) !important;
+        color: #aaa !important;
+        opacity: 0.6 !important;
     }
-    
-    /* Enhanced Metrics with 3D effect */
-    .stMetric {
-        background: linear-gradient(145deg, #ffffff, #f0f0f0);
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 
-            10px 10px 20px #c8ced3,
-            -10px -10px 20px #ffffff;
-        transform: translateZ(0);
-        transition: all 0.3s ease;
-        color: #000000 !important;
+
+    /* ===== Modern Checkbox ===== */
+    .stCheckbox > label {
+        font-size: 1.08rem !important;
+        font-weight: 500 !important;
+        color: #222 !important;
+        padding-left: 8px !important;
     }
-    
-    .stMetric * {
-        color: #000000 !important;
+    .stCheckbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #6a82fb;
+        border-radius: 5px;
     }
-    
-    .stMetric:hover {
-        transform: translateY(-5px);
-        box-shadow: 
-            15px 15px 30px #c8ced3,
-            -15px -15px 30px #ffffff;
+
+    /* ===== Modern "Apply for Access" Button ===== */
+    .stButton > button[data-testid="apply-access"] {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        color: #fff !important;
+        border-radius: 18px !important;
+        font-size: 1.07rem !important;
+        font-weight: 600 !important;
+        box-shadow: 0 2px 10px 0 rgba(100,125,222,0.10);
+        margin-top: 1.1rem !important;
+        margin-bottom: 0.8rem !important;
+        min-height: 48px !important;
     }
-    
-    /* Success and Warning boxes with 3D effects */
-    .success-box-3d {
-        background: linear-gradient(145deg, #d4edda, #c3e6cb);
-        padding: 2rem;
-        border-radius: 20px;
-        border-left: 8px solid #28a745;
-        margin: 1rem 0;
-        box-shadow: 
-            15px 15px 30px #a8d4b3,
-            -15px -15px 30px #e8f5ea;
-        transform: translateZ(0);
-        transition: all 0.3s ease;
-        color: #155724 !important;
+
+    /* ===== General Typography ===== */
+    .stApp, .main .block-container, p, span, div, h1, h2, h3, h4, h5, h6 {
+        font-family: 'Roboto', 'Inter', 'Segoe UI', Arial, sans-serif !important;
+        color: #222 !important;
     }
-    
-    .success-box-3d * {
-        color: #155724 !important;
+
+    /* ===== Remove legacy dark input/button overrides ===== */
+    .stTextInput, .stNumberInput, .stTextArea, .stSelectbox, .stButton {
+        background: transparent !important;
+        color: #222 !important;
+        border: none !important;
+        box-shadow: none !important;
     }
-    
-    .success-box-3d:hover {
-        transform: translateY(-5px) rotateX(2deg);
-        box-shadow: 
-            20px 20px 40px #a8d4b3,
-            -20px -20px 40px #e8f5ea;
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+        .login-container,
+        .card-3d {
+            padding: 1.2rem !important;
+        }
+        h3, h4, h2 {
+            font-size: 1.1rem !important;
+        }
     }
-    
-    .warning-box-3d {
-        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
-        padding: 2rem;
-        border-radius: 20px;
-        border-left: 8px solid #a0a0a0;
-        margin: 1rem 0;
-        box-shadow: 
-            15px 15px 30px #bebebe,
-            -15px -15px 30px #ffffff;
-        transform: translateZ(0);
-        transition: all 0.3s ease;
-        color: #000000 !important;
-    }
-    
-    .warning-box-3d * {
-        color: #000000 !important;
-    }
-    
-    .warning-box-3d:hover {
-        transform: translateY(-5px) rotateX(2deg);
-        box-shadow: 
-            20px 20px 40px #bebebe,
-            -20px -20px 40px #ffffff;
-    }
-    
-    /* Re-establish colored box text after global override */
-    .success-box-3d, .success-box-3d * {
-        color: #155724 !important;
-    }
-    
-    .warning-box-3d, .warning-box-3d * {
-        color: #000000 !important;
-    }
-    
-    /* 3D Input Fields */
-    .stNumberInput > div > div > input {
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        box-shadow: inset 4px 4px 8px #d0d0d0, inset -4px -4px 8px #ffffff;
-        transition: all 0.3s ease;
-    }
-    
-    .stNumberInput > div > div > input:focus {
-        box-shadow: inset 6px 6px 12px #d0d0d0, inset -6px -6px 12px #ffffff;
-        border-color: #667eea;
-    }
-    
-    /* 3D Sidebar */
-    .css-1d391kg {
-        background: linear-gradient(145deg, #d0d0d0, #e0e0e0);
-        border-radius: 15px;
-        box-shadow: 
-            10px 10px 20px #bebebe,
-            -10px -10px 20px #ffffff;
-    }
-    
-    /* Sidebar text color - Multiple selectors for better targeting */
-    .css-1d391kg, .css-1d391kg * {
-        color: #ffffff !important;
-    }
-    
-    /* Streamlit sidebar selectors */
-    [data-testid="stSidebar"], [data-testid="stSidebar"] * {
-        color: #ffffff !important;
-    }
-    
-    /* Additional sidebar selectors */
-    .stSidebar, .stSidebar * {
-        color: #ffffff !important;
-    }
-    
-    /* Sidebar markdown elements */
-    .css-1d391kg .stMarkdown, .css-1d391kg .stMarkdown * {
-        color: #ffffff !important;
-    }
-    
-    /* Sidebar button text should remain white */
-    .css-1d391kg .stButton button {
-        color: #ffffff !important;
-    }
-    
-    /* 3D Title */
+
+    /* Main title */
     .main-title {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: #5d3fd3 !important;
         text-align: center;
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         margin-bottom: 2rem;
     }
-    
-    /* Patient card styling */
-    .patient-card {
-        background: linear-gradient(145deg, #ffffff, #f8f9fa);
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        border-left: 5px solid #667eea;
-        box-shadow: 
-            8px 8px 16px #d0d0d0,
-            -8px -8px 16px #ffffff;
-        transition: all 0.3s ease;
-        color: #000000 !important;
-    }
-    
-    .patient-card * {
-        color: #000000 !important;
-    }
-    
-    .patient-card:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 
-            12px 12px 24px #d0d0d0,
-            -12px -12px 24px #ffffff;
-    }
-    
-    /* Login form styling */
-    .login-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 
-            20px 20px 40px #bebebe,
-            -20px -20px 40px #ffffff;
-        transform: translateZ(0);
-        color: #000000 !important;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .login-container * {
-        color: #000000 !important;
-    }
-    
-    /* Form styling improvements */
-    .stTextInput > div > div > input {
-        border-radius: 12px !important;
-        border: 2px solid #c0c0c0 !important;
-        padding: 14px 18px !important;
-        font-size: 16px !important;
-        transition: all 0.3s ease !important;
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-    }
-    
-    .stTextInput > div > div > input:focus {
-        border-color: #888888 !important;
-        box-shadow: 0 0 0 3px rgba(136, 136, 136, 0.1) !important;
-        background: #f0f0f0 !important;
-    }
-    
-    .stSelectbox > div > div > select {
-        border-radius: 12px !important;
-        border: 2px solid #c0c0c0 !important;
-        padding: 14px 18px !important;
-        font-size: 16px !important;
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-    }
-    
-    .stSelectbox > div > div > select:focus {
-        border-color: #888888 !important;
-        background: #f0f0f0 !important;
-    }
-    
-    .stSelectbox > div > div > select option {
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-        padding: 10px !important;
-    }
-    
-    .stNumberInput > div > div > input {
-        border-radius: 12px !important;
-        border: 2px solid #c0c0c0 !important;
-        padding: 14px 18px !important;
-        font-size: 16px !important;
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-    }
-    
-    .stTextArea > div > div > textarea {
-        border-radius: 12px !important;
-        border: 2px solid #c0c0c0 !important;
-        padding: 14px 18px !important;
-        font-size: 16px !important;
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-    }
-    
-    /* Additional Dropdown Fixes */
-    .stSelectbox div[data-baseweb="select"] {
-        background: #f5f5f5 !important;
-        border-radius: 12px !important;
-        border: 2px solid #c0c0c0 !important;
-    }
-    
-    .stSelectbox div[data-baseweb="select"] > div {
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-        padding: 14px 18px !important;
-        border-radius: 12px !important;
-    }
-    
-    /* Dropdown menu styling */
-    .stSelectbox div[role="listbox"] {
-        background: #f5f5f5 !important;
-        border: 2px solid #c0c0c0 !important;
-        border-radius: 12px !important;
-    }
-    
-    .stSelectbox div[role="option"] {
-        background: #f5f5f5 !important;
-        color: #000000 !important;
-        padding: 10px 18px !important;
-    }
-    
-    .stSelectbox div[role="option"]:hover {
-        background: #e0e0e0 !important;
-        color: #000000 !important;
-    }
-    
-    /* Fix checkbox styling */
-    .stCheckbox {
-        color: #000000 !important;
-    }
-    
-    .stCheckbox > label {
-        color: #000000 !important;
-    }
-    
-    /* Navigation pills */
-    .nav-pill {
-        background: linear-gradient(145deg, #667eea, #764ba2);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        margin: 0.2rem;
-        display: inline-block;
-        box-shadow: 
-            4px 4px 8px #c8ced3,
-            -4px -4px 8px #ffffff;
-        transition: all 0.3s ease;
-    }
-    
-    .nav-pill:hover {
-        transform: translateY(-2px);
-        box-shadow: 
-            6px 6px 12px #c8ced3,
-            -6px -6px 12px #ffffff;
-    }
-    
-    /* General text color fixes */
-    .stApp, .stApp * {
-        color: #000000 !important;
-    }
-    
-    /* Ensure all text elements have proper contrast */
-    p, span, div, h1, h2, h3, h4, h5, h6 {
-        color: #000000 !important;
-    }
-    
-    /* Main content text */
-    .main * {
-        color: #000000 !important;
-    }
-    
-    /* General text color fixes */
-    .stApp, .stApp * {
-        color: #000000 !important;
-    }
-    
-    /* Ensure all text elements have proper contrast */
-    p, span, div, h1, h2, h3, h4, h5, h6 {
-        color: #000000 !important;
-    }
-    
-    /* Main content text */
-    .main * {
-        color: #000000 !important;
-    }
-    
-    /* Streamlit specific elements */
-    .stMarkdown, .stMarkdown * {
-        color: #000000 !important;
-    }
-    
-    .stWrite, .stWrite * {
-        color: #000000 !important;
-    }
-    
-    /* All Streamlit text elements */
-    .stText, .stText * {
-        color: #000000 !important;
-    }
-    
-    /* Headers and subheaders */
-    .stHeader, .stHeader * {
-        color: #000000 !important;
-    }
-    
-    .stSubheader, .stSubheader * {
-        color: #000000 !important;
-    }
-    
-    /* Code blocks and preformatted text */
-    .stCode, .stCode * {
-        color: #000000 !important;
-    }
-    
-    /* All paragraph elements */
-    [data-testid="stMarkdownContainer"] p {
-        color: #000000 !important;
-    }
-    
-    /* All div elements in main content */
-    [data-testid="stVerticalBlock"] div {
-        color: #000000 !important;
-    }
-    
-    /* Button text color (grey theme) */
-    .stButton > button {
-        color: #000000 !important;
-    }
-    
-    /* Input labels and values */
-    .stNumberInput label, .stTextInput label, .stSelectbox label, .stTextArea label {
-        color: #000000 !important;
-    }
-    
-    .stNumberInput input, .stTextInput input, .stTextArea textarea {
-        color: #000000 !important;
-        background-color: #f5f5f5 !important;
-        border: 2px solid #c0c0c0 !important;
-        border-radius: 12px !important;
-        padding: 12px 16px !important;
-    }
-    
-    /* Selectbox styling - white text for readability */
-    .stSelectbox select {
-        color: #ffffff !important;
-        background-color: #3a3a3a !important;
-        border: 2px solid #c0c0c0 !important;
-        border-radius: 12px !important;
-        padding: 12px 16px !important;
+
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background: #f8f9fa !important;
     }
 
-    /* Dropdown options - white on dark */
-    .stSelectbox select option {
-        color: #ffffff !important;
-        background-color: #2a2a2a !important;
+    [data-testid="stSidebar"] * {
+        color: #2c3e50 !important;
     }
 
-    /* Target the dropdown container */
+    /* Selectbox styling */
     .stSelectbox > div > div {
-        color: #ffffff !important;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        color: #fff !important;
+        border: 1.5px solid #764ba2 !important;
+        border-radius: 14px !important;
+        box-shadow: 0 2px 8px 0 rgba(127,83,172,0.15);
     }
 
-    /* Target the selected value display */
-    .stSelectbox > div > div > div {
-        color: #ffffff !important;
-        background-color: #3a3a3a !important;
-        border-radius: 12px !important;
-    }
-
-    /* Additional selectbox targeting */
-    [data-testid="stSelectbox"] select,
-    [data-testid="stSelectbox"] option {
-        color: #ffffff !important;
-        background-color: #3a3a3a !important;
-    }
-    
-    /* Target the actual dropdown options when opened (legacy UL/LI) */
-    .stSelectbox ul li {
-        color: #ffffff !important;
-        background-color: #2a2a2a !important;
-    }
-    
-    /* More specific dropdown option targeting (ARIA role) */
-    .stSelectbox [role="option"] {
-        color: #ffffff !important;
-        background-color: #2a2a2a !important;
-    }
-    .stSelectbox [role="option"]:hover {
-        background-color: #444444 !important;
-        color: #ffffff !important;
-    }
-    .stSelectbox [role="option"][aria-selected="true"],
-    .stSelectbox [role="option"][data-selected="true"] {
-        background-color: #555555 !important;
-        color: #ffffff !important;
-    }
-    
-    /* Streamlit/react-select current value & placeholder */
-    .css-1wa3eu0-placeholder, .css-1uccc91-singleValue {
-        color: #ffffff !important;
-    }
-    
-    /* React-select dropdown menu */
-    .css-26l3qy-menu {
-        background-color: #2a2a2a !important;
-        border: 2px solid #c0c0c0 !important;
-        border-radius: 12px !important;
-    }
-    
-    .css-26l3qy-menu .css-1n7v3ny-option {
-        color: #ffffff !important;
-        background-color: #2a2a2a !important;
-    }
-    
-    .css-26l3qy-menu .css-1n7v3ny-option:hover {
-        color: #ffffff !important;
-        background-color: #444444 !important;
-    }
-
-    /* More specific selectbox selectors (dark) */
-    [data-testid="stSelectbox"] div[role="listbox"],
-    [data-testid="stSelectbox"] div[role="option"],
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div > div {
-        color: #ffffff !important;
-        background-color: #2a2a2a !important;
-        border: 2px solid #c0c0c0 !important;
-        border-radius: 12px !important;
-    }
-
-    /* Target the actual input/display element */
-    .stSelectbox input,
-    .stSelectbox div[role="combobox"] {
-        color: #ffffff !important;
-        background-color: #3a3a3a !important;
-    }
-
-    /* Metric labels */
-    .stMetric .metric-label, 
-    .stMetric .metric-value {
-        color: #000000 !important;
-    }
-
-    /* More targeted approach instead of global override */
-    /* Remove the global * selector and target specific elements instead */
-    .stApp, .main .block-container, p, span, div:not([data-testid="stSelectbox"] div) {
-        color: #000000 !important;
-    }
-
-    /* Re-establish button colors */
-    .stButton > button, 
-    .stDownloadButton > button {
-        color: white !important;
-        background: linear-gradient(145deg, #667eea, #764ba2) !important;
-    }
-
-    /* Ensure selectbox grey theme */
-    .stSelectbox, 
-    .stSelectbox * {
-        color: #000000 !important;
-    }
-    
-    /* Force the dropdown options (Female, Male, Other) to be white */
-    div[data-baseweb="select"] > div,
-    div[data-baseweb="select"] > div > div,
-    div[data-baseweb="select"] ul,
-    div[data-baseweb="select"] ul li,
-    div[data-baseweb="select"] [role="option"] {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Target the select dropdown menu specifically */
-    .stSelectbox div[data-baseweb="popover"] div[role="listbox"] > div {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Override any remaining black text in selectbox */
-    .stSelectbox div:not(.stSelectbox div[data-testid]) {
-        color: #ffffff !important;
-    }
-    
-    /* Target the dropdown menu that appears when clicked */
-    .stSelectbox div[role="listbox"] {
-        background-color: rgba(0, 0, 0, 0.9) !important;
-    }
-    
-    .stSelectbox div[role="listbox"] > div {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Target each option in the dropdown list */
+    /* Dropdown options */
     .stSelectbox div[role="option"] {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Target options on hover */
-    .stSelectbox div[role="option"]:hover {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.9) !important;
-    }
-    
-    /* Additional targeting for the dropdown items */
-    .stSelectbox ul[role="listbox"] li,
-    .stSelectbox div[data-baseweb="menu"] > div,
-    .stSelectbox div[data-baseweb="menu"] > div > div {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* ULTIMATE OVERRIDE - Force all selectbox content to be white */
-    div[data-baseweb="select"] * {
-        color: #ffffff !important;
-    }
-    
-    /* Target the menu content specifically */
-    div[data-baseweb="menu"] * {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Force override for all selectbox descendants */
-    .stSelectbox * {
-        color: #ffffff !important;
-    }
-    
-    /* Target specific Streamlit select classes */
-    .css-1uccc91-singleValue,
-    .css-1wa3eu0-placeholder,
-    .css-26l3qy-menu,
-    .css-4ljt47-MenuList,
-    .css-11unzgr,
-    .css-1n7v3ny-option {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    /* Nuclear option - override everything in selectbox with white */
-    .stSelectbox div,
-    .stSelectbox span,
-    .stSelectbox p,
-    .stSelectbox li {
-        color: #ffffff !important;
-    }
-
-    /* Override any remaining white text */
-    * {
-        color: #000000 !important;
-    }
-    
-    /* Re-establish button colors after global override */
-    .stButton > button, .stDownloadButton > button {
-        color: white !important;
-        background: linear-gradient(145deg, #667eea, #764ba2) !important;
-    }
-    
-    /* FORCE sidebar text to be white - override the global black rule */
-    [data-testid="stSidebar"] *, 
-    .css-1d391kg *, 
-    .stSidebar *,
-    section[data-testid="stSidebar"] *,
-    .css-1d391kg h1,
-    .css-1d391kg h2, 
-    .css-1d391kg h3,
-    .css-1d391kg p,
-    .css-1d391kg span,
-    .css-1d391kg div {
-        color: #ffffff !important;
-    }
-    
-    /* Special styling for gender dropdown */
-    .stSelectbox select {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-        font-weight: bold !important;
-        border: 2px solid #4CAF50 !important;
-    }
-
-    /* Force dropdown text to be white - multiple selectors */
-    .stSelectbox select option {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.8) !important;
-    }
-
-    /* Target the dropdown container */
-    .stSelectbox > div > div {
-        color: #ffffff !important;
-    }
-
-    /* Target the selected value display */
-    .stSelectbox > div > div > div {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-    }
-
-    /* Additional selectbox targeting */
-    [data-testid="stSelectbox"] select,
-    [data-testid="stSelectbox"] option {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-    }
-
-    /* More specific selectbox selectors to override global styles */
-    [data-testid="stSelectbox"] div[role="listbox"],
-    [data-testid="stSelectbox"] div[role="option"],
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div > div {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-    }
-
-    /* Target the actual input/display element */
-    .stSelectbox input,
-    .stSelectbox div[role="combobox"] {
-        color: #ffffff !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-    }
-
-    /* Metric labels */
-    .stMetric .metric-label, 
-    .stMetric .metric-value {
-        color: #000000 !important;
-    }
-
-    /* More targeted approach instead of global override */
-    /* Remove the global * selector and target specific elements instead */
-    .stApp, .main .block-container, p, span, div:not([data-testid="stSelectbox"] div) {
-        color: #000000 !important;
-    }
-
-    /* Re-establish button colors */
-    .stButton > button, 
-    .stDownloadButton > button {
-        color: white !important;
-        background: linear-gradient(145deg, #667eea, #764ba2) !important;
-    }
-
-    /* Ensure selectbox text stays white despite other targeting */
-    .stSelectbox, 
-    .stSelectbox * {
-        color: #ffffff !important;
-    }
-    /* FORCE sidebar text to be white - override the global black rule */
-    [data-testid="stSidebar"] *, 
-    .css-1d391kg *, 
-    .stSidebar *,
-    section[data-testid="stSidebar"] *,
-    .css-1d391kg h1,
-    .css-1d391kg h2, 
-    .css-1d391kg h3,
-    .css-1d391kg p,
-    .css-1d391kg span,
-    .css-1d391kg div {
-        color: #ffffff !important;
-    }
-    
-    /* Hide Streamlit progress bars and loading indicators */
-    .stProgress > div > div > div > div {
-        display: none !important;
-    }
-    
-    .stProgress {
-        display: none !important;
-    }
-    
-    /* Hide the running indicator bars */
-    .stAppViewContainer > .main > div > .block-container > div > div > div > .stProgress {
-        display: none !important;
-    }
-    
-    /* Hide any loading/running bars */
-    div[data-testid="stProgress"] {
-        display: none !important;
-    }
-    
-    /* Hide the status indicators */
-    .statusWidget {
-        display: none !important;
-    }
-    
-    /* Hide running app indicators */
-    .st-emotion-cache-1dp5vir {
-        display: none !important;
-    }
-
-    /* Portal-safe overrides to force white text in dropdown menu options */
-    div[role="listbox"] {
-        background-color: #2a2a2a !important;
-        border: 2px solid #c0c0c0 !important;
-        border-radius: 12px !important;
-    }
-    div[role="option"] {
-        color: #ffffff !important;
-        background-color: #2a2a2a !important;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        color: #fff !important;
         padding: 10px 16px !important;
     }
-    div[role="option"]:hover {
-        background-color: #444444 !important;
-        color: #ffffff !important;
+
+    .stSelectbox div[role="option"]:hover {
+        background: linear-gradient(90deg, #764ba2 0%, #667eea 100%) !important;
+        color: #fff !important;
     }
-    div[role="option"][aria-selected="true"],
-    div[role="option"][data-selected="true"] {
-        background-color: #555555 !important;
-        color: #ffffff !important;
+
+    /* Additional dropdown styling for better white text visibility */
+    [data-baseweb="select"] > div {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        color: #fff !important;
+    }
+
+    [data-baseweb="popover"] [role="listbox"] {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        border: 1px solid #764ba2 !important;
+        border-radius: 14px !important;
+    }
+
+    [data-baseweb="popover"] [role="option"] {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        color: #fff !important;
+        padding: 12px 16px !important;
+    }
+
+    [data-baseweb="popover"] [role="option"]:hover {
+        background: linear-gradient(90deg, #764ba2 0%, #667eea 100%) !important;
+        color: #fff !important;
+    }
+
+    /* Force white text for selected value and placeholder */
+    .stSelectbox .css-1uccc91-singleValue, 
+    .stSelectbox .css-1wa3eu0-placeholder {
+        color: #fff !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1125,8 +495,8 @@ DOCTORS = {}
 @st.cache_resource
 def load_models():
     try:
-        model = joblib.load("breast_cancer_model.pkl")
-        scaler = joblib.load("scaler.pkl")
+        model = joblib.load(r"D:\WORK\MLCoursera\MedicalDiagnosis\breast_cancer_model.pkl")
+        scaler = joblib.load(r"D:\WORK\MLCoursera\MedicalDiagnosis\scaler.pkl")
         return model, scaler
     except FileNotFoundError as e:
         st.error(f"Model or scaler file not found: {e}")
